@@ -193,7 +193,7 @@ async function simulationTwo() {
     console.log("click");
   });
   while (true) {
-    await rate(2000);
+    await rate(5000);
     runSim(0, 10, bodiesTwo);
     runSim(1, 20, bodiesTwo);
     runSim(2, 30, bodiesTwo);

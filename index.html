@@ -6,10 +6,10 @@
     <title>Mecanica</title>
   </head>
   <body>
-    <h1>Simulación de órbitas planetarias</h1>
     <div class="glowscript__container">
       <div class="flexflex">
         <div id="glowscript" class="glowscript">
+          <h1>Simulación de órbitas planetarias</h1>
           <canvas height="600" width="1000" id="glowscript__dummy"></canvas>
           <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
           <!-- custom -->
@@ -37,7 +37,6 @@
             type="text/javascript"
             src="https://s3.amazonaws.com/glowscript/package/glow.3.0.min.js"
           ></script>
-          <!-- <script src="glow.js"></script> -->
           <script src="glowscript.js"></script>
           <script>
             $(() => {
@@ -110,21 +109,25 @@
         </div>
         <div id="stopSimulation">Stop</div>
       </div>
-      <div class="glowscript__content">
+      <div>
         <p>Escenarios</p>
-        <div>
-          <button id="glowscript__one" class="glowscript__button">
-            Escenario 1
-          </button>
-          <button id="glowscript__two" class="glowscript__button">
-            Escenario 2
-          </button>
-          <button id="glowscript__three" class="glowscript__button">
-            Escenario 3
-          </button>
-          <button id="glowscript__custom" class="glowscript__button">
-            Personalizado
-          </button>
+        <div class="glowscript__content">
+          <div>
+            <button id="glowscript__one" class="glowscript__button">
+              Escenario 1
+            </button>
+            <button id="glowscript__two" class="glowscript__button">
+              Escenario 2
+            </button>
+          </div>
+          <div>
+            <button id="glowscript__three" class="glowscript__button">
+              Escenario 3
+            </button>
+            <button id="glowscript__custom" class="glowscript__button">
+              Personalizado
+            </button>
+          </div>
         </div>
         <div>
           <h2>Pseudo-codigo</h2>
@@ -165,18 +168,18 @@ rotation: 30
               disabled
               placeholder="6.67e-11"
             />
-            <textarea name="cmd" id="cmd" cols="30" rows="30">
+            <textarea name="cmd" id="cmd" cols="30" rows="25">
 {
 name: sun
-position: (0, 0, 0)
-radius: 110
+position: (1, 1, 1)
+radius: 150
 mass: 2e10
-speed: (0, 0, 0)
+speed: (10, 10, 10)
 rotation: 10
 }
 {
 name: mercurio
-position: (100, 0, 0)
+position: (500, 0, 0)
 radius: 30
 mass: 3.3e3
 speed: (0, 0, 200)
@@ -184,36 +187,22 @@ rotation: 20
 }
 {
 name: marte
-position: (300, 0, 0)
-radius: 75
+position: (800, 0, 0)
+radius: 65
 mass: 5.97e4
 speed: (0, 0, 81.9)
 rotation: 30
 }
 {
-name: tierra
-position: (500, 0, 0)
-radius: 50
-mass: 2e10
-speed: (150, 0, 0)
-rotation: 10
-}
-{
-name: asteroide
-position: (201.24, 0, 180)
-radius: 10
-mass: 3.3e3
-speed: (0, 0, 300)
+name: venus
+position: (1300, 0, 0)
+radius: 85
+mass: 4e6
+speed: (0, 0, 70)
 rotation: 20
 }
-{
-name: jupiter
-position: (1500, 0, 0)
-radius: 75
-mass: 5.97e4
-speed: (0, 0, 81.9)
-rotation: 30
-}
+
+
             </textarea>
             <button id="glowscript__run">Correr!</button>
           </div>
