@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mecanica</title>
+  </head>
+  <body>
+    <h1>Simulación de órbitas planetarias</h1>
+    <div class="glowscript__container">
+      <div class="flexflex">
+        <div id="glowscript" class="glowscript">
+          <canvas height="600" width="1000" id="glowscript__dummy"></canvas>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <!-- custom -->
+          <link rel="stylesheet" href="./glow.css" />
+          <!-- custom -->
+          <link
+            type="text/css"
+            href="https://s3.amazonaws.com/glowscript/css/redmond/2.1/jquery-ui.custom.css"
+            rel="stylesheet"
+          />
+          <link
+            type="text/css"
+            href="https://s3.amazonaws.com/glowscript/css/ide.css"
+            rel="stylesheet"
+          />
+          <script
+            type="text/javascript"
+            src="https://s3.amazonaws.com/glowscript/lib/jquery/2.1/jquery.min.js"
+          ></script>
+          <script
+            type="text/javascript"
+            src="https://s3.amazonaws.com/glowscript/lib/jquery/2.1/jquery-ui.custom.min.js"
+          ></script>
+          <script
+            type="text/javascript"
+            src="https://s3.amazonaws.com/glowscript/package/glow.3.0.min.js"
+          ></script>
+          <!-- <script src="glow.js"></script> -->
+          <script src="glowscript.js"></script>
+          <script>
+            $(() => {
+              $("#glowscript__cmd").hide();
+
+              $("#stopSimulation").click(() => {
+                $(".glowscript-canvas-wrapper").remove();
+                $("#glowscript__dummy").remove();
+                var dummy =
+                  '<canvas  height="600" width="1000" id="glowscript__dummy"></canvas>';
+                $("#glowscript").append(dummy);
+              });
+
+              $("#glowscript__one").click(() => {
+                $("#glowscript__log").show();
+                $("#glowscript__cmd").hide();
+                $("#glowscript__dummy").remove();
+                $(".glowscript-canvas-wrapper").remove();
+                simulationOne();
+              });
+
+              $("#glowscript__two").click(() => {
+                $("#glowscript__log").show();
+                $("#glowscript__cmd").hide();
+                $("#glowscript__dummy").remove();
+                $(".glowscript-canvas-wrapper").remove();
+                simulationTwo();
+              });
+
+              $("#glowscript__three").click(() => {
+                $("#glowscript__log").show();
+                $("#glowscript__cmd").hide();
+                $("#glowscript__dummy").remove();
+                $(".glowscript-canvas-wrapper").remove();
+                simulationThree();
+              });
+
+              $("#glowscript__run").click(() => {
+                $("#glowscript__dummy").remove();
+                $(".glowscript-canvas-wrapper").remove();
+                var data = $("#cmd").val();
+                var newG = $("#newg").val();
+                if (newG) {
+                  console.log(calc);
+                  let calc;
+                  try {
+                    let suck = newG.split("e");
+                    calc = suck[0] * 10 ** suck[1];
+                  } catch {
+                    calc = newG * 1;
+                  }
+                  console.log(calc);
+                  simulationCustom(data, newG);
+                } else {
+                  simulationCustom(data);
+                }
+              });
+
+              $("#glowscript__custom").click(() => {
+                var dummy =
+                  '<canvas  height="600" width="1000" id="glowscript__dummy"></canvas>';
+                $("#glowscript__dummy").remove();
+                $(".glowscript-canvas-wrapper").remove();
+                $("#glowscript").append(dummy);
+                $("#glowscript__log").hide();
+                $("#glowscript__cmd").show();
+              });
+            });
+          </script>
+        </div>
+        <div id="stopSimulation">Stop</div>
+      </div>
+      <div class="glowscript__content">
+        <p>Escenarios</p>
+        <div>
+          <button id="glowscript__one" class="glowscript__button">
+            Escenario 1
+          </button>
+          <button id="glowscript__two" class="glowscript__button">
+            Escenario 2
+          </button>
+          <button id="glowscript__three" class="glowscript__button">
+            Escenario 3
+          </button>
+          <button id="glowscript__custom" class="glowscript__button">
+            Personalizado
+          </button>
+        </div>
+        <div>
+          <h2>Pseudo-codigo</h2>
+          <div class="glowscript__code">
+            <textarea id="glowscript__log" cols="30" rows="30" disabled>
+{
+name: sun
+position: (0, 0, 0)
+radius: 100
+mass: 2e10
+speed: (0, 0, 0)
+rotation: 10
+}
+{
+name: asteroid
+position: (201.24, 0, 0)
+radius: 50
+mass: 3.3e3
+speed: (0, 0, 300)
+rotation: 20
+}
+{
+name: jupiter
+position: (2580, 0, 0)
+radius: 75
+mass: 5.97e4
+speed: (0, 0, 81.9)
+rotation: 30
+}
+            </textarea>
+          </div>
+          <div id="glowscript__cmd">
+            <label for="newg">Constante de gravitación:</label>
+            <input
+              type="text"
+              name="newg"
+              id="newg"
+              disabled
+              placeholder="6.67e-11"
+            />
+            <textarea name="cmd" id="cmd" cols="30" rows="30">
+{
+name: sun
+position: (0, 0, 0)
+radius: 110
+mass: 2e10
+speed: (0, 0, 0)
+rotation: 10
+}
+{
+name: mercurio
+position: (100, 0, 0)
+radius: 30
+mass: 3.3e3
+speed: (0, 0, 200)
+rotation: 20
+}
+{
+name: marte
+position: (300, 0, 0)
+radius: 75
+mass: 5.97e4
+speed: (0, 0, 81.9)
+rotation: 30
+}
+{
+name: tierra
+position: (500, 0, 0)
+radius: 50
+mass: 2e10
+speed: (150, 0, 0)
+rotation: 10
+}
+{
+name: asteroide
+position: (201.24, 0, 180)
+radius: 10
+mass: 3.3e3
+speed: (0, 0, 300)
+rotation: 20
+}
+{
+name: jupiter
+position: (1500, 0, 0)
+radius: 75
+mass: 5.97e4
+speed: (0, 0, 81.9)
+rotation: 30
+}
+            </textarea>
+            <button id="glowscript__run">Correr!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@500&display=swap");
+
+body {
+  margin: 0;
+  background-color: #424242 !important;
+  /* background-color: #e2dddf !important; */
+  max-height: 100vh;
+  font-family: "Syne", sans-serif !important;
+}
+h1 {
+  margin: 10px;
+  color: #d1f7ff;
+}
+.glowscript__container {
+  color: #fafafa;
+  /* color: #2f404d; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#glowscript__dummy {
+  height: 600;
+  width: 1000;
+  background-color: black;
+}
+.flexflex {
+  display: flex;
+  flex-direction: column;
+
+  margin: 3vh;
+}
+.glowscript__button {
+  padding: 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: none;
+  background-color: #85ebd9;
+}
+span {
+  color: white;
+}
+
+#stopSimulation {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  align-self: center;
+  /* background-color: #e2dddf; */
+  background-color: #ffccdc;
+  cursor: pointer;
+  color: #212121;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#glowscript__log {
+  padding: 10px;
+  background-color: #01012b;
+}
+
+#glowscript__cmd {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+#glowscript__cmd textarea {
+  background-color: #01012b;
+  color: #fafafa;
+}
+#glowscript__cmd button {
+  border: none;
+  background-color: #63345e;
+  font-size: 15px;
+  padding: 5px;
+}
