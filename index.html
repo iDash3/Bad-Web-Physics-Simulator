@@ -42,14 +42,6 @@
             $(() => {
               $("#glowscript__cmd").hide();
 
-              $("#stopSimulation").click(() => {
-                $(".glowscript-canvas-wrapper").remove();
-                $("#glowscript__dummy").remove();
-                var dummy =
-                  '<canvas  height="600" width="1000" id="glowscript__dummy"></canvas>';
-                $("#glowscript").append(dummy);
-              });
-
               $("#glowscript__one").click(() => {
                 $("#glowscript__log").show();
                 $("#glowscript__cmd").hide();

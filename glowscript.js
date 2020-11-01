@@ -17,9 +17,8 @@ function makeBodies(instructions) {
   return bodies;
 }
 
-function runSim(i, bodies, G = -6.674e-11) {
-  // var G = -6.674e-4;
-  var dt = 0.001;
+function runSim(i, bodies, G) {
+  var dt = 0.01;
 
   var forces = [];
   for (let j = 0; j < bodies.length; j++) {
@@ -55,21 +54,23 @@ function runSim(i, bodies, G = -6.674e-11) {
   bodies[i].rotate((angle = bodies[i].rota), (axis = vec(0, 1, 0)));
 }
 
-// Simulation 1
+// --------------------------
+//
+// ------ Simulation 1
+// The following runs the code for the first simulation
+//
+// --------------------------
 async function simulationOne() {
   Array.prototype.toString = function () {
     return __parsearray(this);
   };
 
+  // Simulation Parameters
   var scene = canvas();
-  var vector = vec;
-
   scene.width = 1000;
   scene.height = 600;
-
   scene.forward = vec(0, (0.3)["-u"](), (1)["-u"]());
 
-  var earth_radius = 6371000;
   var bodiesOne = makeBodies([
     {
       name: "sun",
@@ -100,7 +101,13 @@ async function simulationOne() {
     },
   ]);
 
-  while (true) {
+  // Stop simulation on click
+  var stop_simulation = true;
+  $("#stopSimulation").click(() => {
+    stop_simulation = false;
+    console.log("click");
+  });
+  while (stop_simulation) {
     await rate(2000);
     for (let b = 0; b < bodiesOne.length; b++) {
       runSim(b, bodiesOne, (G = -6.7e-4));
@@ -109,175 +116,176 @@ async function simulationOne() {
 }
 $(function () {
   window.__context = {
-    // glowscript_container: $("#glowscript").removeAttr("id"),
     glowscript_container: $("#glowscript"),
   };
 });
 
-// Simulation 2
+// --------------------------
+//
+// ------ Simulation 2
+// The following runs the code for the second simulation
+//
+// --------------------------
 async function simulationTwo() {
   Array.prototype.toString = function () {
     return __parsearray(this);
   };
 
+  // Simulation Parameters
   var scene = canvas();
-  var vector = vec;
-
   scene.width = 1000;
   scene.height = 600;
-
   scene.forward = vec(0, (0.3)["-u"](), (1)["-u"]());
 
-  var body_one = sphere({
-    pos: vec(100, 0, 0),
-    radius: 2,
-    color: color.yellow,
-  });
-  body_one.mass = 1;
-  body_one.p = vec(3, 5, 0);
-  attach_trail(body_one, { color: body_one.color });
+  var bodiesTwo = makeBodies([
+    {
+      name: "m1",
+      pos: vec(100, 0, 0),
+      radius: 2,
+      color: color.yellow,
+      mass: 1,
+      p: vec(3, 5, 0),
+      rota: 10,
+    },
+    {
+      name: "m2",
+      pos: vec(0, 100, 0),
+      radius: 2,
+      color: vec(0.555, 0.539, 0.503),
+      mass: 1,
+      p: vec(0, 3, 5),
+      rota: 20,
+    },
+    {
+      name: "m3",
+      pos: vec(0, 0, 100),
+      radius: 2,
+      color: vec(1, 0, 1),
+      mass: 1,
+      p: vec(5, 0, 3),
+      rota: 30,
+    },
+  ]);
 
-  var body_two = sphere({
-    pos: vec(0, 100, 0),
-    radius: 2,
-    color: vec(0.555, 0.539, 0.503),
-  });
-  body_two.mass = 1;
-  body_two.p = vec(0, 3, 5);
-  attach_trail(body_two, { color: body_two.color });
-
-  var body_three = sphere({
-    pos: vec(0, 0, 100),
-    radius: 2,
-    color: vec(1, 0, 1),
-  });
-  body_three.mass = 1;
-  body_three.p = vec(5, 0, 3);
-  attach_trail(body_three, { color: body_three.color });
-
-  bodiesTwo = [body_one, body_two, body_three];
-  function runSim(i, rot, bodies) {
-    var G = -2500;
-    var dt = 0.001;
-
-    var b1 = bodies[i].pos["-"](bodies[(i + 1) % 3].pos);
-    var b2 = bodies[i].pos["-"](bodies[(i + 2) % 3].pos);
-
-    var magb1 = mag(b1);
-    var magb2 = mag(b2);
-
-    var posB1 = b1["/"](magb1);
-    var posB2 = b2["/"](magb2);
-
-    var fgB1 = G["*"](
-      bodies[(i + 1) % 3].mass["*"](bodies[i].mass)["*"](posB1)
-    )["/"](magb1 ** 2);
-    var fgB2 = G["*"](
-      bodies[(i + 2) % 3].mass["*"](bodies[i].mass)["*"](posB2)
-    )["/"](magb2 ** 2);
-    var fgB = fgB1["+"](fgB2);
-
-    var prevprevP = fgB["/"](bodies[i].mass);
-    var prevP = prevprevP["*"](dt);
-    bodies[i].p = bodies[i].p["+"](prevP);
-
-    var prevPos = bodies[i].p["*"](dt);
-    bodies[i].pos = bodies[i].pos["+"](prevPos);
-
-    bodies[i].rotate((angle = rot), (axis = vec(0, 1, 0)));
-  }
-
+  // Click to stop simulation
   var stop_simulation = true;
   $("#stopSimulation").click(() => {
     stop_simulation = false;
     console.log("click");
   });
-  while (true) {
-    await rate(5000);
-    runSim(0, 10, bodiesTwo);
-    runSim(1, 20, bodiesTwo);
-    runSim(2, 30, bodiesTwo);
-  }
-}
-$(function () {
-  window.__context = {
-    // glowscript_container: $("#glowscript").removeAttr("id"),
-    glowscript_container: $("#glowscript"),
-  };
-});
-
-// Simulation 3
-async function simulationThree() {
-  Array.prototype.toString = function () {
-    return __parsearray(this);
-  };
-
-  var scene = canvas();
-  var vector = vec;
-
-  scene.width = 1000;
-  scene.height = 600;
-
-  scene.forward = vec(0, (0.3)["-u"](), (1)["-u"]());
-
-  var earth_radius = 6371000;
-  var bodiesOne = makeBodies([
-    {
-      name: "sun",
-      pos: vec(0, 0, 0),
-      radius: earth_radius * 109,
-      color: color.yellow,
-      mass: 1.989e30,
-      p: vec(0, 0, 0),
-      rota: 10,
-    },
-    {
-      name: "jupiter",
-      pos: vec(7.78e11, 0, 0),
-      radius: earth_radius * 11,
-      color: color.orange,
-      mass: 1.898e27,
-      p: vec(0, 13060, 0),
-      rota: 30,
-    },
-    {
-      name: "jupitermoon",
-      pos: vec(7.78e11, 0, 4.216e8),
-      radius: earth_radius * 0.002,
-      color: color.red,
-      mass: 8.9e22,
-      p: vec(0, 0, 17334),
-      rota: 30,
-    },
-  ]);
-
-  while (true) {
-    await rate(2000);
-    for (let b = 0; b < bodiesOne.length; b++) {
-      runSim(b, bodiesOne);
+  while (stop_simulation) {
+    await rate(1000);
+    for (let b = 0; b < bodiesTwo.length; b++) {
+      runSim(b, bodiesTwo, -2500);
     }
   }
 }
 $(function () {
   window.__context = {
-    // glowscript_container: $("#glowscript").removeAttr("id"),
     glowscript_container: $("#glowscript"),
   };
 });
 
-// Custom
-async function simulationCustom(data, newG = -6.67e-4) {
+// --------------------------
+//
+// ------ Simulation 3
+// The following runs the code for the third simulation
+//
+// --------------------------
+async function simulationThree() {
   Array.prototype.toString = function () {
     return __parsearray(this);
   };
 
+  // Simulation Parameters
   var scene = canvas();
-  var vector = vec;
-
   scene.width = 1000;
   scene.height = 600;
-
   scene.forward = vec(0, (0.3)["-u"](), (1)["-u"]());
+
+  var GG = -6.67e4;
+  var masa_tierra = 5.97e4;
+  var UA = 516;
+  var dist_luna = 67.08;
+  var pos_jupiter = vec(0, 5.2 * UA, 0);
+  var pos_luna_dist = Math.sqrt(dist_luna ** 2 / 3);
+  var pos_luna = vec(pos_luna_dist, pos_luna_dist, pos_luna_dist)["+"](
+    pos_jupiter
+  );
+  var v_jupiter = vec(70.2927, 0, 0);
+  console.log(v_jupiter);
+  var v_luna = vec(84.0321, 0, 0);
+  console.log(v_luna);
+
+  var bodiesThree = makeBodies([
+    {
+      name: "sun",
+      pos: vec(0, 0, 0),
+      radius: 110,
+      color: color.yellow,
+      mass: masa_tierra * 332946,
+      p: vec(0, 0, 0),
+      rota: 10,
+    },
+    {
+      name: "jupiter",
+      pos: pos_jupiter,
+      radius: 30,
+      color: vec(0.555, 0.539, 0.503),
+      mass: masa_tierra * 318,
+      p: v_jupiter,
+      rota: 20,
+    },
+    {
+      name: "europa",
+      pos: pos_luna,
+      radius: 3,
+      color: vec(1, 0, 1),
+      mass: masa_tierra * 0.008,
+      p: v_luna,
+      rota: 30,
+    },
+  ]);
+
+  var run_simulation = true;
+  $("#stopSimulation").click(() => {
+    run_simulation = false;
+    console.log("click");
+  });
+  while (run_simulation) {
+    await rate(1000);
+    for (let b = 0; b < bodiesThree.length; b++) {
+      runSim(b, bodiesThree, -6.67e-4);
+    }
+  }
+}
+$(function () {
+  window.__context = {
+    glowscript_container: $("#glowscript"),
+  };
+});
+
+// --------------------------
+//
+// ------ Custom Simulation
+// The following runs the code for the custom simulation
+//
+// --------------------------
+async function simulationCustom(data, newG) {
+  Array.prototype.toString = function () {
+    return __parsearray(this);
+  };
+
+  // Simulation Parameters
+  var scene = canvas();
+  scene.width = 1000;
+  scene.height = 600;
+  scene.forward = vec(0, (0.3)["-u"](), (1)["-u"]());
+
+  // If value of g is not provided
+  if (!newG) {
+    newG = -6.67e-4;
+  }
 
   var listdata = [];
   var newData = data.split("{");
@@ -330,20 +338,22 @@ async function simulationCustom(data, newG = -6.67e-4) {
     newBody.color = color.orange;
     listdata.push(newBody);
   }
-  console.log(listdata);
-  console.log(newG);
-  var bodiesOne = makeBodies(listdata);
+  var bodiesCustom = makeBodies(listdata);
 
-  while (true) {
-    await rate(2000);
-    for (let b = 0; b < bodiesOne.length; b++) {
-      runSim(b, bodiesOne, newG);
+  var run_simulation = true;
+  $("#stopSimulation").click(() => {
+    run_simulation = false;
+    console.log("click");
+  });
+  while (run_simulation) {
+    await rate(1000);
+    for (let b = 0; b < bodiesCustom.length; b++) {
+      runSim(b, bodiesCustom, newG);
     }
   }
 }
 $(function () {
   window.__context = {
-    // glowscript_container: $("#glowscript").removeAttr("id"),
     glowscript_container: $("#glowscript"),
   };
 });
