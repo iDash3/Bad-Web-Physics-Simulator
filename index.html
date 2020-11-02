@@ -43,24 +43,108 @@
               $("#glowscript__cmd").hide();
 
               $("#glowscript__one").click(() => {
-                $("#glowscript__log").show();
                 $("#glowscript__cmd").hide();
+                $("#glowscript__log").show();
+                $("#glowscript__log").empty();
+                $("#glowscript__log").html(
+                  `{
+name: sun
+position: (0, 0, 0)
+radius: 100
+mass: 2e10
+speed: (0, 0, 0)
+rotation: 10
+}
+{
+name: asteroid
+position: (201.24, 0, 0)
+radius: 1
+mass: 300 
+speed: (0, 0, 82)
+rotation: 20
+}
+{
+name: jupiter
+position: (2683, 0, 0)
+radius: 75
+mass: 18984600 
+speed: (0, 0, 81.9)
+rotation: 30
+}
+            `
+                );
                 $("#glowscript__dummy").remove();
                 $(".glowscript-canvas-wrapper").remove();
                 simulationOne();
               });
 
               $("#glowscript__two").click(() => {
-                $("#glowscript__log").show();
                 $("#glowscript__cmd").hide();
+                $("#glowscript__log").show();
+                $("#glowscript__log").empty();
+                $("#glowscript__log").html(
+                  `{
+name: m1 
+position: (100, 0, 0)
+radius: 2 
+mass: 1 
+speed: (3, 5, 0)
+rotation: 10
+}
+{
+name: m2 
+position: (0, 100, 0)
+radius: 2
+mass: 1 
+speed: (0, 3, 5)
+rotation: 20
+}
+{
+name: m3 
+position: (0, 0, 100)
+radius: 2 
+mass: 1 
+speed: (5, 0, 3)
+rotation: 30
+}
+            `
+                );
                 $("#glowscript__dummy").remove();
                 $(".glowscript-canvas-wrapper").remove();
                 simulationTwo();
               });
 
               $("#glowscript__three").click(() => {
-                $("#glowscript__log").show();
                 $("#glowscript__cmd").hide();
+                $("#glowscript__log").show();
+                $("#glowscript__log").empty();
+                $("#glowscript__log").html(
+                  `{
+name: sun
+position: (0, 0, 0)
+radius: 110
+mass: 2e10
+speed: (0, 0, 0)
+rotation: 10
+}
+{
+name: jupiter
+position: (0, 2683, 0)
+radius: 35 
+mass: 18984600 
+speed: (70.2927, 0, 0)
+rotation: 20
+}
+{
+name: europa 
+position: (38.7286, 2721.928, 38.728)
+radius: 2
+mass: 477.6 
+speed: (84.0321, 0, 0)
+rotation: 30
+}
+            `
+                );
                 $("#glowscript__dummy").remove();
                 $(".glowscript-canvas-wrapper").remove();
                 simulationThree();
@@ -72,15 +156,14 @@
                 var data = $("#cmd").val();
                 var newG = $("#newg").val();
                 if (newG) {
-                  console.log(calc);
                   let calc;
-                  try {
+                  let contains = newG.includes("e");
+                  if (contains) {
                     let suck = newG.split("e");
                     calc = suck[0] * 10 ** suck[1];
-                  } catch {
-                    calc = newG * 1;
+                  } else {
+                    calc = parseInt(newG);
                   }
-                  console.log(calc);
                   simulationCustom(data, newG);
                 } else {
                   simulationCustom(data);
@@ -125,41 +208,11 @@
           <h2>Pseudo-codigo</h2>
           <div class="glowscript__code">
             <textarea id="glowscript__log" cols="30" rows="30" disabled>
-{
-name: sun
-position: (0, 0, 0)
-radius: 100
-mass: 2e10
-speed: (0, 0, 0)
-rotation: 10
-}
-{
-name: asteroid
-position: (201.24, 0, 0)
-radius: 50
-mass: 3.3e3
-speed: (0, 0, 300)
-rotation: 20
-}
-{
-name: jupiter
-position: (2580, 0, 0)
-radius: 75
-mass: 5.97e4
-speed: (0, 0, 81.9)
-rotation: 30
-}
             </textarea>
           </div>
           <div id="glowscript__cmd">
             <label for="newg">Constante de gravitación:</label>
-            <input
-              type="text"
-              name="newg"
-              id="newg"
-              disabled
-              placeholder="6.67e-11"
-            />
+            <input type="text" name="newg" id="newg" placeholder="6.67e-4" />
             <textarea name="cmd" id="cmd" cols="30" rows="25">
 {
 name: sun

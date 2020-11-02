@@ -217,9 +217,7 @@ async function simulationThree() {
     pos_jupiter
   );
   var v_jupiter = vec(70.2927, 0, 0);
-  console.log(v_jupiter);
   var v_luna = vec(84.0321, 0, 0);
-  console.log(v_luna);
 
   var bodiesThree = makeBodies([
     {
@@ -289,6 +287,8 @@ async function simulationCustom(data, newG) {
   // If value of g is not provided
   if (!newG) {
     newG = -6.67e-4;
+  } else {
+    newG = parseInt(newG);
   }
 
   var listdata = [];
@@ -326,11 +326,16 @@ async function simulationCustom(data, newG) {
           break;
         case "mass":
           let calc;
-          try {
+          let contains = endmylife[1].includes("e");
+          if (contains) {
             let suck = endmylife[1].split("e");
+            console.log(endmylife[1]);
             calc = suck[0] * 10 ** suck[1];
-          } catch {
-            calc = endmylife[1] * 1;
+            console.log(calc);
+          } else {
+            console.log(endmylife[1]);
+            calc = parseInt(endmylife[1]);
+            console.log(calc);
           }
           newBody.mass = calc;
           break;
@@ -340,6 +345,7 @@ async function simulationCustom(data, newG) {
       }
     }
     newBody.color = color.orange;
+    console.log(newBody);
     listdata.push(newBody);
   }
   var bodiesCustom = makeBodies(listdata);
@@ -352,6 +358,7 @@ async function simulationCustom(data, newG) {
   while (run_simulation) {
     await rate(1000);
     for (let b = 0; b < bodiesCustom.length; b++) {
+      console.log(b, bodiesCustom, newG);
       runSim(b, bodiesCustom, newG);
     }
   }
