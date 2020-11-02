@@ -18,6 +18,7 @@ function makeBodies(instructions) {
 }
 
 function runSim(i, bodies, G) {
+  var dt = 0.1;
   var dt = 0.01;
 
   var forces = [];
@@ -71,6 +72,8 @@ async function simulationOne() {
   scene.height = 600;
   scene.forward = vec(0, (0.3)["-u"](), (1)["-u"]());
 
+  var masa_tierra = 5.97e4;
+  var UA = 516;
   var bodiesOne = makeBodies([
     {
       name: "sun",
@@ -78,25 +81,26 @@ async function simulationOne() {
       radius: 100,
       color: color.yellow,
       mass: 2e10,
+      // p: vec(1, 1, 0),
       p: vec(0, 0, 0),
       rota: 10,
     },
     {
       name: "asteroid",
-      pos: vec(516 * 0.39, 0, 0),
-      radius: 50,
-      color: vec(0.555, 0.539, 0.503),
-      mass: 3.3e3,
-      p: vec(0, 0, 300),
+      pos: vec(-UA * 5.12, -280, 00),
+      radius: 1,
+      color: vec(205 / 254, 125 / 254, 132 / 254),
+      mass: masa_tierra * 0.005,
+      p: vec(0, 0, 82),
       rota: 20,
     },
     {
       name: "jupiter",
       pos: vec(516 * 5.2, 0, 0),
       radius: 75,
-      color: color.orange,
-      mass: 5.97e4 * 318,
-      p: vec(0, 0, 81.9),
+      color: vec(0.8307, 0.6141, 0.496),
+      mass: masa_tierra * 318,
+      p: vec(0, 0, 82),
       rota: 30,
     },
   ]);
@@ -230,8 +234,8 @@ async function simulationThree() {
     {
       name: "jupiter",
       pos: pos_jupiter,
-      radius: 30,
-      color: vec(0.555, 0.539, 0.503),
+      radius: 35,
+      color: vec(0.8307, 0.6141, 0.496),
       mass: masa_tierra * 318,
       p: v_jupiter,
       rota: 20,
@@ -239,8 +243,8 @@ async function simulationThree() {
     {
       name: "europa",
       pos: pos_luna,
-      radius: 3,
-      color: vec(1, 0, 1),
+      radius: 2,
+      color: vec(200 / 254, 139 / 254, 58 / 254),
       mass: masa_tierra * 0.008,
       p: v_luna,
       rota: 30,
