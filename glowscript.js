@@ -18,7 +18,7 @@ function makeBodies(instructions) {
 }
 
 function runSim(i, bodies, G) {
-  var dt = 0.1;
+  // var dt = 0.1;
   var dt = 0.01;
 
   var forces = [];
@@ -284,13 +284,6 @@ async function simulationCustom(data, newG) {
   scene.height = 600;
   scene.forward = vec(0, (0.3)["-u"](), (1)["-u"]());
 
-  // If value of g is not provided
-  if (!newG) {
-    newG = -6.67e-4;
-  } else {
-    newG = parseInt(newG);
-  }
-
   var listdata = [];
   var newData = data.split("{");
   for (let i = 1; i < newData.length; i++) {
@@ -307,40 +300,38 @@ async function simulationCustom(data, newG) {
         case "position":
           let jesuschirst = endmylife[1].substring(1, endmylife[1].length - 1);
           let godpls = jesuschirst.split(",");
-          console.log(godpls);
           let newvec = vec(
             parseInt(godpls[0]),
             parseInt(godpls[1]),
             parseInt(godpls[2])
           );
+          console.log(newvec);
           newBody.pos = newvec;
           break;
         case "speed":
           let jesus = endmylife[1].substring(1, endmylife[1].length - 1);
           let god = jesus.split(",");
           let newp = vec(parseInt(god[0]), parseInt(god[1]), parseInt(god[2]));
+          console.log(newp);
           newBody.p = newp;
           break;
         case "radius":
-          newBody.radius = endmylife[1] * 1;
+          newBody.radius = parseInt(endmylife[1]);
           break;
         case "mass":
           let calc;
           let contains = endmylife[1].includes("e");
           if (contains) {
             let suck = endmylife[1].split("e");
-            console.log(endmylife[1]);
             calc = suck[0] * 10 ** suck[1];
-            console.log(calc);
           } else {
-            console.log(endmylife[1]);
             calc = parseInt(endmylife[1]);
-            console.log(calc);
           }
+          console.log(calc);
           newBody.mass = calc;
           break;
         case "rotation":
-          newBody.rota = endmylife[1] * 1;
+          newBody.rota = parseInt(endmylife[1]);
           break;
       }
     }
@@ -349,6 +340,7 @@ async function simulationCustom(data, newG) {
     listdata.push(newBody);
   }
   var bodiesCustom = makeBodies(listdata);
+  newG = parseFloat(newG);
 
   var run_simulation = true;
   $("#stopSimulation").click(() => {
@@ -358,7 +350,7 @@ async function simulationCustom(data, newG) {
   while (run_simulation) {
     await rate(1000);
     for (let b = 0; b < bodiesCustom.length; b++) {
-      console.log(b, bodiesCustom, newG);
+      console.log(bodiesCustom, newG);
       runSim(b, bodiesCustom, newG);
     }
   }

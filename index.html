@@ -162,11 +162,12 @@ rotation: 30
                     let suck = newG.split("e");
                     calc = suck[0] * 10 ** suck[1];
                   } else {
-                    calc = parseInt(newG);
+                    calc = parseFloat(newG);
                   }
+                  console.log(newG);
                   simulationCustom(data, newG);
                 } else {
-                  simulationCustom(data);
+                  simulationCustom(data, -6.67e-4);
                 }
               });
 
@@ -224,7 +225,7 @@ rotation: 10
 }
 {
 name: mercurio
-position: (500, 0, 0)
+position: (516, 0, 0)
 radius: 30
 mass: 3.3e3
 speed: (0, 0, 200)
@@ -232,7 +233,7 @@ rotation: 20
 }
 {
 name: marte
-position: (800, 0, 0)
+position: (1810, 0, 0)
 radius: 65
 mass: 5.97e4
 speed: (0, 0, 81.9)
@@ -240,7 +241,7 @@ rotation: 30
 }
 {
 name: venus
-position: (1300, 0, 0)
+position: (2350, 0, 0)
 radius: 85
 mass: 4e6
 speed: (0, 0, 70)
